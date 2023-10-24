@@ -2,6 +2,8 @@ package com.eurder.items;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,10 +20,17 @@ public class ItemService {
         return itemMapper.toDto(itemRepository.get(id));
     }
 
-    public Set<ItemDto> getItems() {
-        return itemRepository.getItems().values().stream()
-                .map(itemMapper::toDto)
-                .collect(Collectors.toSet());
+    public HashMap<String, ItemDto> getItems() {
+        HashMap<String, ItemDto> resultHashMap = new HashMap<>();
+
+        for (Map.Entry<String, Item> entry : itemRepository.getItems().entrySet()) {
+            String key = entry.getKey();
+            Item item = entry.getValue();
+            ItemDto itemDto = itemMapper.toDto(item); // Use your ItemMapper
+            resultHashMap.put(key, itemDto);
+        }
+
+        return resultHashMap;
     }
 
     public ItemDto add(ItemDto itemDto) {

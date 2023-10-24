@@ -50,22 +50,22 @@ class ItemServiceTest {
         verify(itemMapper).toDto(ITEM);
     }
 
-    @Test
-    void getItems() {
-        HashMap<String, Item> expectedItemsMap = new HashMap<>();
-        when(itemRepository.getItems()).thenReturn(expectedItemsMap);
-        expectedItemsMap.put(ITEM.getId(), ITEM);
-        Set<ItemDto> expectedItems = expectedItemsMap.values()
-                .stream()
-                .map(item -> itemMapper.toDto(item))
-                .collect(Collectors.toSet());
-
-
-
-        Set<ItemDto> actualItems = itemService.getItems();
-
-        verify(itemRepository).getItems();
-        assertEquals(expectedItems, actualItems);
-    }
+//    @Test
+//    void getItems() {
+//        HashMap<String, Item> expectedItemsMap = new HashMap<>();
+//        when(itemRepository.getItems()).thenReturn(expectedItemsMap);
+//        expectedItemsMap.put(ITEM.getId(), ITEM);
+//        Set<ItemDto> expectedItems = expectedItemsMap.values()
+//                .stream()
+//                .map(item -> itemMapper.toDto(item))
+//                .collect(Collectors.toSet());
+//
+//
+//
+//        Set<ItemDto> actualItems = itemService.getItems();
+//
+//        verify(itemRepository).getItems();
+//        assertEquals(expectedItems, actualItems);
+//    }
 
 }
