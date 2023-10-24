@@ -1,11 +1,10 @@
 package com.eurder.customers;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.util.NoSuchElementException;
 
 @Path("customers")
 public class CustomerController {
@@ -28,6 +27,23 @@ public class CustomerController {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(e.getMessage())
                     .build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAll() {
+        return Response.ok(customerService.getAll()).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response get(@PathParam("id") String id) {
+        try {
+            return Response.ok(customerService.get(id)).build();
+        } catch (NoSuchElementException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 }

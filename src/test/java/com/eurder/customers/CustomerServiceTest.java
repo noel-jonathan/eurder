@@ -3,10 +3,12 @@ package com.eurder.customers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import static com.eurder.customers.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class CustomerServiceTest {
     @Mock
@@ -25,33 +27,12 @@ class CustomerServiceTest {
 
     @Test
     void testCreateCustomer() {
-        CreateCustomerDto createCustomerDto = new CreateCustomerDto(
-                "John",
-                "Doe",
-                "<EMAIL>",
-                "Address",
-                "123456789"
-        );
-        Customer customer = new Customer(
-                "John",
-                "Doe",
-                "<EMAIL>",
-                "Address",
-                "123456789"
-        );
-        CustomerDto customerDto = new CustomerDto(
-                customer.getId(),
-                "John",
-                "Doe",
-                "<EMAIL>"
-        );
+        when(customerMapper.mapToEntity(CREATE_CUSTOMER_DTO)).thenReturn(CUSTOMER);
 
-        Mockito.when(customerMapper.mapToEntity(createCustomerDto)).thenReturn(customer);
-        Mockito.when(customerMapper.mapToDto(customer)).thenReturn(customerDto);
+        customerService.create(CREATE_CUSTOMER_DTO);
 
-        CustomerDto result = customerService.create(createCustomerDto);
-
-        Mockito.verify(customerRepository).add(customer);
-        assertEquals(customer.getId(), result.getId());
+        verify(customerRepository).add(CUSTOMER);
+        verify(customerMapper).mapToEntity(CREATE_CUSTOMER_DTO);
+        verify(customerMapper).mapToDto(CUSTOMER);
     }
 }

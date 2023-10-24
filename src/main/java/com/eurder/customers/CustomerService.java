@@ -2,6 +2,9 @@ package com.eurder.customers;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @ApplicationScoped
 public class CustomerService {
     private final CustomerRepository customerRepository;
@@ -13,6 +16,17 @@ public class CustomerService {
 
     public CustomerDto create(CreateCustomerDto createCustomerDto) {
         Customer customer = customerMapper.mapToEntity(createCustomerDto);
-        return customerMapper.mapToDto(customerRepository.add(customer));
+        customerRepository.add(customer);
+        return customerMapper.mapToDto(customer);
+    }
+
+    public Set<CustomerDto> getAll() {
+        return customerRepository.getCustomers().values().stream()
+              .map(customerMapper::mapToDto)
+              .collect(Collectors.toSet());
+    }
+
+    public CustomerDto get(String id) {
+        return customerMapper.mapToDto(customerRepository.getCustomer(id));
     }
 }

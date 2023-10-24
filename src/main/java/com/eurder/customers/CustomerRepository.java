@@ -3,6 +3,7 @@ package com.eurder.customers;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 @ApplicationScoped
 public class CustomerRepository {
@@ -13,6 +14,9 @@ public class CustomerRepository {
     }
 
     public Customer getCustomer(String id) {
+        if (!customers.containsKey(id)) {
+            throw new NoSuchElementException("No customer with id " + id + " found");
+        }
         return customers.get(id);
     }
 
