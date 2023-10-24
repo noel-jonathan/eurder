@@ -1,11 +1,19 @@
 package com.eurder.customers;
 
 public class CreateCustomerDto {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String address;
-    private String phoneNumber;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final String address;
+    private final String phoneNumber;
+
+    public CreateCustomerDto(String firstName, String lastName, String email, String address, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -25,30 +33,5 @@ public class CreateCustomerDto {
 
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public CreateCustomerDto setFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    public CreateCustomerDto setLastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public CreateCustomerDto setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public CreateCustomerDto setAddress(String address) {
-        this.address = address;
-        return this;
-    }
-
-    public CreateCustomerDto setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-        return this;
     }
 }

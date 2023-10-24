@@ -13,6 +13,7 @@ public class CustomerService {
 
     public CustomerDto createCustomer(CreateCustomerDto createCustomerDto) {
         Customer customer = customerMapper.mapToEntity(createCustomerDto);
-        return customerMapper.mapToDto(customerRepository.addCustomer(customer));
+        customerRepository.addCustomer(customer);
+        return customerMapper.mapToDto(customer);
     }
 }
