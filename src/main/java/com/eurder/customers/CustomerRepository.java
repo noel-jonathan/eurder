@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 @ApplicationScoped
 public class CustomerRepository {
-    private HashMap<String, Customer> customers = new HashMap<>();
+    private final HashMap<String, Customer> customers = new HashMap<>();
 
     public HashMap<String, Customer> getCustomers() {
         return customers;
@@ -20,7 +20,7 @@ public class CustomerRepository {
         return customers.get(id);
     }
 
-    public Customer add(Customer customer) {
-        return customers.put(customer.getId(), customer);
+    public void add(Customer customer) {
+        customers.put(customer.getId(), customer);
     }
 }

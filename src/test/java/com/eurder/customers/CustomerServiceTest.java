@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Set;
+
 import static com.eurder.customers.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -35,4 +39,15 @@ class CustomerServiceTest {
         verify(customerMapper).mapToEntity(CREATE_CUSTOMER_DTO);
         verify(customerMapper).mapToDto(CUSTOMER);
     }
+
+//    @Test
+//    void testGetAll() {
+//        when(customerRepository.getCustomers()).thenReturn();
+//
+//        Set<CustomerDto> customers = customerService.getAll();
+//
+//        verify(customerRepository).getCustomers();
+//        verify(customerMapper).mapToDto(CUSTOMER);
+//        assertEquals(1, customers.size());
+//    }
 }

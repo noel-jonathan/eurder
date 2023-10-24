@@ -19,9 +19,8 @@ public class CustomerController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(CreateCustomerDto createCustomerDto) {
         try {
-            CustomerDto customerDto = customerService.create(createCustomerDto);
             return Response.status(Response.Status.CREATED)
-                    .entity(customerDto)
+                    .entity(customerService.create(createCustomerDto))
                     .build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
