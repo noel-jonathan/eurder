@@ -5,6 +5,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 @Path("customers")
@@ -18,8 +19,14 @@ public class CustomerController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @ResponseStatus(200)
-    public CustomerDto create(CreateCustomerDto createCustomerDto) {
-        return customerService.createCustomer(createCustomerDto);
+    public Response create(CreateCustomerDto createCustomerDto) {
+        try {
+            CustomerDto customerDto = customerService.createCustomer(createCustomerDto);
+            return Response.ok(customerDto).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage())
+                    .build();
+        }
     }
 }
