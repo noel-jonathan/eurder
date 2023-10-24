@@ -22,10 +22,10 @@ class CustomerControllerTest {
     @Test
     void createCustomer_givenIncompleteRequest_thenShouldReturn400() {
         CreateCustomerDto incompleteCreateCustomerDto = new CreateCustomerDto(
-                CREATE_CUSTOMER_DTO.getFirstName(),
-                CREATE_CUSTOMER_DTO.getLastName(),
-                CREATE_CUSTOMER_DTO.getEmail(),
-                CREATE_CUSTOMER_DTO.getAddress(),
+                CREATE_CUSTOMER_DTO.firstName(),
+                CREATE_CUSTOMER_DTO.lastName(),
+                CREATE_CUSTOMER_DTO.email(),
+                CREATE_CUSTOMER_DTO.address(),
                 null
         );
 

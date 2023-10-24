@@ -16,10 +16,10 @@ public class ItemMapper {
 
     public Item toEntity(ItemDto itemDto) {
         return new Item(
-                itemDto.getName(),
-                itemDto.getDescription(),
-                itemDto.getPrice(),
-                itemDto.getQuantity()
+                itemDto.name(),
+                itemDto.description(),
+                itemDto.price(),
+                itemDto.quantity()
         );
     }
 }

@@ -15,11 +15,11 @@ public class CustomerMapper {
 
     public Customer mapToEntity(CreateCustomerDto createCustomerDto) {
         return new Customer(
-                createCustomerDto.getFirstName(),
-                createCustomerDto.getLastName(),
-                createCustomerDto.getEmail(),
-                createCustomerDto.getAddress(),
-                createCustomerDto.getPhoneNumber()
+                createCustomerDto.firstName(),
+                createCustomerDto.lastName(),
+                createCustomerDto.email(),
+                createCustomerDto.address(),
+                createCustomerDto.phoneNumber()
         );
     }
 }

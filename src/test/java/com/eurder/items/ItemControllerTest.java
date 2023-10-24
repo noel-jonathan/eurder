@@ -20,10 +20,10 @@ class ItemControllerTest {
     @Test
     void createItem_givenIncompleteRequest_thenShouldReturn400() {
         ItemDto incompleteCreateItemDto = new ItemDto(
-                ITEM_DTO.getId(),
+                ITEM_DTO.id(),
                 null,
-                ITEM_DTO.getDescription(),
-                ITEM_DTO.getPrice(),
+                ITEM_DTO.description(),
+                ITEM_DTO.price(),
                 1
         );
 
