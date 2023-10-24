@@ -13,7 +13,7 @@ public class MockCustomerService extends CustomerService{
     }
 
     @Override
-    public CustomerDto createCustomer(CreateCustomerDto createCustomerDto){
+    public CustomerDto create(CreateCustomerDto createCustomerDto){
         CustomerDto customerDtoMock = mock(CustomerDto.class);
 
         when(customerDtoMock.getId()).thenReturn("1111");

@@ -16,7 +16,7 @@ public class CustomerRepository {
         return customers.get(id);
     }
 
-    public Customer addCustomer(Customer customer) {
+    public Customer add(Customer customer) {
         return customers.put(customer.getId(), customer);
     }
 }

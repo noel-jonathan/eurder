@@ -49,9 +49,9 @@ class CustomerServiceTest {
         Mockito.when(customerMapper.mapToEntity(createCustomerDto)).thenReturn(customer);
         Mockito.when(customerMapper.mapToDto(customer)).thenReturn(customerDto);
 
-        CustomerDto result = customerService.createCustomer(createCustomerDto);
+        CustomerDto result = customerService.create(createCustomerDto);
 
-        Mockito.verify(customerRepository).addCustomer(customer);
+        Mockito.verify(customerRepository).add(customer);
         assertEquals(customer.getId(), result.getId());
     }
 }

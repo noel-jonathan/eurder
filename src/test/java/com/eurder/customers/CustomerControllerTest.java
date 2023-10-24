@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.given;
 //@TestProfile(TestCustomerServiceProfile.class)
 class CustomerControllerTest {
     @Test
-    void whenCreateCustomer_thenShouldReturnSuccessfully() {
+    void whenCreateCustomer_thenShouldReturn201() {
         CreateCustomerDto createCustomerDto = new CreateCustomerDto(
                 "John",
                 "Doe",
@@ -26,6 +26,23 @@ class CustomerControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(createCustomerDto)
                 .when().post()
-                .then().statusCode(200);
+                .then().statusCode(201);
+    }
+
+    @Test
+    void createCustomer_givenIncompleteRequest_thenShouldReturn400() {
+        CreateCustomerDto createCustomerDto = new CreateCustomerDto(
+                "John",
+                "",
+                "<EMAIL>",
+                "Address",
+                "123456789"
+        );
+
+        given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(createCustomerDto)
+                .when().post()
+                .then().statusCode(400);
     }
 }

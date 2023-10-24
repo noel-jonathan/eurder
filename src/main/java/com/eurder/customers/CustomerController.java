@@ -6,7 +6,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.jboss.resteasy.reactive.ResponseStatus;
 
 @Path("customers")
 public class CustomerController {
@@ -21,8 +20,10 @@ public class CustomerController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(CreateCustomerDto createCustomerDto) {
         try {
-            CustomerDto customerDto = customerService.createCustomer(createCustomerDto);
-            return Response.ok(customerDto).build();
+            CustomerDto customerDto = customerService.create(createCustomerDto);
+            return Response.status(Response.Status.CREATED)
+                    .entity(customerDto)
+                    .build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(e.getMessage())
