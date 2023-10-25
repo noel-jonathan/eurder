@@ -4,7 +4,9 @@ import com.eurder.customers.Customer;
 import com.eurder.customers.CustomerRepository;
 import com.eurder.items.Item;
 import com.eurder.items.ItemRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
