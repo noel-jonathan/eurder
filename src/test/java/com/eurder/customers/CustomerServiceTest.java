@@ -11,8 +11,8 @@ import java.util.Set;
 
 import static com.eurder.customers.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class CustomerServiceTest {
     @Mock
@@ -27,27 +27,35 @@ class CustomerServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         customerService = new CustomerService(customerRepository, customerMapper);
+
+        when(customerMapper.mapToEntity(CREATE_CUSTOMER_DTO)).thenReturn(CUSTOMER);
+        customerService.create(CREATE_CUSTOMER_DTO);
     }
 
     @Test
     void testCreateCustomer() {
-        when(customerMapper.mapToEntity(CREATE_CUSTOMER_DTO)).thenReturn(CUSTOMER);
-
-        customerService.create(CREATE_CUSTOMER_DTO);
 
         verify(customerRepository).add(CUSTOMER);
         verify(customerMapper).mapToEntity(CREATE_CUSTOMER_DTO);
         verify(customerMapper).mapToDto(CUSTOMER);
     }
 
-//    @Test
-//    void testGetAll() {
-//        when(customerRepository.getCustomers()).thenReturn();
-//
-//        Set<CustomerDto> customers = customerService.getAll();
-//
-//        verify(customerRepository).getCustomers();
-//        verify(customerMapper).mapToDto(CUSTOMER);
-//        assertEquals(1, customers.size());
-//    }
+    @Test
+    void testGetAll() {
+
+        customerService.getAll();
+
+        verify(customerRepository).getCustomers();
+        verify(customerMapper).mapToDto(CUSTOMER);
+    }
+
+     @Test
+    void testGetCustomer() {
+        when(customerRepository.getCustomer(CUSTOMER_ID)).thenReturn(CUSTOMER);
+
+        customerService.get(CUSTOMER_ID);
+
+        verify(customerRepository).getCustomer(CUSTOMER_ID);
+        verify(customerMapper, times(2)).mapToDto(CUSTOMER);
+     }
 }
