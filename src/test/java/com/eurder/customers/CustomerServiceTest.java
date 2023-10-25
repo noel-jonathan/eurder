@@ -5,10 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Set;
-
 import static com.eurder.customers.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,7 +24,7 @@ class CustomerServiceTest {
         MockitoAnnotations.openMocks(this);
         customerService = new CustomerService(customerRepository, customerMapper);
 
-        when(customerMapper.mapToEntity(CREATE_CUSTOMER_DTO)).thenReturn(CUSTOMER);
+        when(customerMapper.toEntity(CREATE_CUSTOMER_DTO)).thenReturn(CUSTOMER);
         customerService.create(CREATE_CUSTOMER_DTO);
     }
 
@@ -36,8 +32,8 @@ class CustomerServiceTest {
     void testCreateCustomer() {
 
         verify(customerRepository).add(CUSTOMER);
-        verify(customerMapper).mapToEntity(CREATE_CUSTOMER_DTO);
-        verify(customerMapper).mapToDto(CUSTOMER);
+        verify(customerMapper).toEntity(CREATE_CUSTOMER_DTO);
+        verify(customerMapper).toDto(CUSTOMER);
     }
 
     @Test
@@ -46,7 +42,7 @@ class CustomerServiceTest {
         customerService.getAll();
 
         verify(customerRepository).getCustomers();
-        verify(customerMapper).mapToDto(CUSTOMER);
+        verify(customerMapper).toDto(CUSTOMER);
     }
 
      @Test
@@ -56,6 +52,6 @@ class CustomerServiceTest {
         customerService.get(CUSTOMER_ID);
 
         verify(customerRepository).getCustomer(CUSTOMER_ID);
-        verify(customerMapper, times(2)).mapToDto(CUSTOMER);
+        verify(customerMapper, times(2)).toDto(CUSTOMER);
      }
 }

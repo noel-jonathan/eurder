@@ -2,20 +2,25 @@ package com.eurder.orders;
 
 import com.eurder.customers.Customer;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class Order {
     private final String id;
     private final Customer customer;
-    private final ItemOrder itemOrder;
+    private final ItemOrderGroup itemOrderGroup;
     private final double totalPrice;
 
-    public Order(Customer customer, ItemOrder itemOrder, double totalPrice) {
+    public Order(Customer customer, ItemOrderGroup itemOrderGroup) {
         this.id = UUID.randomUUID().toString();
         this.customer = customer;
-        this.itemOrder = itemOrder;
-        this.totalPrice = totalPrice;
+        this.itemOrderGroup = itemOrderGroup;
+        this.totalPrice = calculateTotalPrice();
+    }
+
+    private double calculateTotalPrice() {
+        double itemPrice = this.itemOrderGroup.getItem().getPrice();
+        int itemQuantity = this.itemOrderGroup.getQuantity();
+        return itemPrice * itemQuantity;
     }
 
     public String getId() {
@@ -26,8 +31,8 @@ public class Order {
         return customer;
     }
 
-    public ItemOrder getItemOrder() {
-        return itemOrder;
+    public ItemOrderGroup getItemOrder() {
+        return itemOrderGroup;
     }
 
     public double getTotalPrice() {

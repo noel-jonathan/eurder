@@ -4,8 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class ItemService {
@@ -17,7 +15,7 @@ public class ItemService {
     }
 
     public ItemDto get(String id) {
-        return itemMapper.toDto(itemRepository.get(id));
+        return itemMapper.toDto(itemRepository.getItem(id));
     }
 
     public HashMap<String, ItemDto> getItems() {

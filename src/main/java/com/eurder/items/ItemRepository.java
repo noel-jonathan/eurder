@@ -13,7 +13,7 @@ public class ItemRepository {
     public HashMap<String, Item> getItems() {
         return items;
     }
-    public Item get(String id) {
+    public Item getItem(String id) {
         if (!items.containsKey(id)) {
             throw new NoSuchElementException("No item with id " + id + " found");
         }

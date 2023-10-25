@@ -4,7 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class CustomerMapper {
-    public CustomerDto mapToDto(Customer customer) {
+    public CustomerDto toDto(Customer customer) {
         return new CustomerDto(
                 customer.getId(),
                 customer.getFirstName(),
@@ -13,7 +13,7 @@ public class CustomerMapper {
         );
     }
 
-    public Customer mapToEntity(CreateCustomerDto createCustomerDto) {
+    public Customer toEntity(CreateCustomerDto createCustomerDto) {
         return new Customer(
                 createCustomerDto.firstName(),
                 createCustomerDto.lastName(),
