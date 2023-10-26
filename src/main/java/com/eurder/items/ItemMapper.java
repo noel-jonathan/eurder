@@ -10,7 +10,7 @@ public class ItemMapper {
                 item.getName(),
                 item.getDescription(),
                 item.getPrice(),
-                item.getQuantity()
+                item.getStock()
         );
     }
 

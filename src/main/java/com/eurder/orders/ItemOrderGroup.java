@@ -6,20 +6,25 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class ItemOrderGroup {
+    public static final int DAYS_TO_ADD_WHEN_IN_STOCK = 1;
+    public static final int DAYS_TO_ADD_WHEN_NOT_IN_STOCK = 7;
     private final String id;
     private final Item item;
-    private final int quantity;
+    private final int amount;
     private final LocalDate shippingDate;
 
-    public ItemOrderGroup(Item item, int quantity) {
+    public ItemOrderGroup(Item item, int amount) {
         this.id = UUID.randomUUID().toString();
         this.item = item;
-        this.quantity = quantity;
+        this.amount = amount;
         this.shippingDate = calculateShippingDate();
     }
 
     private LocalDate calculateShippingDate() {
-        return LocalDate.now();
+        if (this.item.getStock() < this.amount) {
+            return LocalDate.now().plusDays(DAYS_TO_ADD_WHEN_NOT_IN_STOCK);
+        }
+        return LocalDate.now().plusDays(DAYS_TO_ADD_WHEN_IN_STOCK);
     }
 
     public String getId() {
@@ -30,8 +35,8 @@ public class ItemOrderGroup {
         return item;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getAmount() {
+        return amount;
     }
 
     public LocalDate getShippingDate() {

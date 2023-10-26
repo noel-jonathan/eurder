@@ -10,14 +10,14 @@ public class Item {
     private final String name;
     private final String description;
     private final double price;
-    private int quantity;
+    private int stock;
 
-    public Item(String name, String description, double price, int quantity) {
+    public Item(String name, String description, double price, int stock) {
         this.id = String.valueOf(UUID.randomUUID().toString());
         this.name = validate("Name", name);
         this.description = validate("Description", description);
         this.price = validate("Price", price);
-        this.quantity = validate("Quantity", quantity);
+        this.stock = validate("Quantity", stock);
     }
 
     public String validate(String fieldName, String string) {
@@ -63,7 +63,7 @@ public class Item {
         return price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getStock() {
+        return stock;
     }
 }

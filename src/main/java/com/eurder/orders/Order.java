@@ -19,7 +19,7 @@ public class Order {
 
     private double calculateTotalPrice() {
         double itemPrice = this.itemOrderGroup.getItem().getPrice();
-        int itemQuantity = this.itemOrderGroup.getQuantity();
+        int itemQuantity = this.itemOrderGroup.getAmount();
         return itemPrice * itemQuantity;
     }
 

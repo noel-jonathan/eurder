@@ -7,7 +7,7 @@ import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import static com.eurder.items.ItemServiceTest.ITEM_DTO;
+import static com.eurder.TestConstants.ITEM_DTO;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 

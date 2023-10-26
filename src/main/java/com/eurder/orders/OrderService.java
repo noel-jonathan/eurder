@@ -23,10 +23,10 @@ public class OrderService {
     public OrderDto create(CreateOrderDto createOrderDto) {
         Customer customer = customerRepository.getCustomer(createOrderDto.customerId());
         Item item = itemRepository.getItem(createOrderDto.orderGroup().itemId());
-        int quantity = createOrderDto.orderGroup().quantity();
+        int amount = createOrderDto.orderGroup().amount();
         Order order = new Order(
                 customer,
-                new ItemOrderGroup(item, quantity)
+                new ItemOrderGroup(item, amount)
         );
         orderRepository.add(order);
         return orderMapper.toDto(order);

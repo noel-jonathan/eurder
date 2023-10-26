@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static com.eurder.customers.TestConstants.*;
+import static com.eurder.TestConstants.*;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
