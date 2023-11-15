@@ -13,10 +13,9 @@ public class OrderMapper {
 
     public OrderDto toDto(Order order){
         return new OrderDto(
-                order.getId(),
-                customerMapper.toDto(order.getCustomer()),
-                order.getItemOrder(),
-                order.getTotalPrice()
+                customerMapper.toDto(order.customer),
+                order.itemOrderGroup,
+                order.totalPrice
         );
     };
 }

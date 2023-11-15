@@ -1,39 +1,36 @@
 package com.eurder.items;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
+@Transactional
 public class ItemService {
-    private final ItemRepository itemRepository;
     private final ItemMapper itemMapper;
-    public ItemService(ItemRepository itemRepository, ItemMapper itemMapper) {
-        this.itemRepository = itemRepository;
+    public ItemService(ItemMapper itemMapper) {
         this.itemMapper = itemMapper;
     }
 
     public ItemDto get(String id) {
-        return itemMapper.toDto(itemRepository.getItem(id));
+        return itemMapper.toDto(Item.findById(id));
     }
 
-    public HashMap<String, ItemDto> getItems() {
-        HashMap<String, ItemDto> resultHashMap = new HashMap<>();
-
-        for (Map.Entry<String, Item> entry : itemRepository.getItems().entrySet()) {
-            String key = entry.getKey();
-            Item item = entry.getValue();
-            ItemDto itemDto = itemMapper.toDto(item); // Use your ItemMapper
-            resultHashMap.put(key, itemDto);
-        }
-
-        return resultHashMap;
+    public List<ItemDto> getItems() {
+        List<Item> items = Item.listAll();
+        return items.stream()
+                .map(itemMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public ItemDto add(ItemDto itemDto) {
-        Item item = itemMapper.toEntity(itemDto);
-        itemRepository.add(item);
+    public ItemDto add(Item item) {
+
+        Item.persist(item);
+        Item.flush();
         return itemMapper.toDto(item);
     }
 }

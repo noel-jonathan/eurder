@@ -1,10 +1,11 @@
 package com.eurder.customers;
 
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.util.NoSuchElementException;
+import org.jboss.resteasy.reactive.RestPath;
 
 @Path("customers")
 public class CustomerController {
@@ -17,19 +18,16 @@ public class CustomerController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(CreateCustomerDto createCustomerDto) {
-        try {
-            return Response.status(Response.Status.CREATED)
-                    .entity(customerService.create(createCustomerDto))
-                    .build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(e.getMessage())
-                    .build();
-        }
+    public Response register(@Valid Customer customer) {
+
+        return Response.status(Response.Status.CREATED)
+                .entity(customerService.register(customer))
+                .build();
+
     }
 
     @GET
+    @RolesAllowed("admin")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         return Response.ok(customerService.getAll()).build();
@@ -37,12 +35,10 @@ public class CustomerController {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed("admin")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("id") String id) {
-        try {
-            return Response.ok(customerService.get(id)).build();
-        } catch (NoSuchElementException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
-        }
+    public Response get(@RestPath("id") Long id) {
+
+        return Response.ok(customerService.get(id)).build();
     }
 }

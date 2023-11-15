@@ -1,41 +1,41 @@
 package com.eurder.orders;
 
 import com.eurder.customers.Customer;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
-import java.util.UUID;
+@Entity
+@Table(name = "eurder")
+public class Order extends PanacheEntity {
 
-public class Order {
-    private final String id;
-    private final Customer customer;
-    private final ItemOrderGroup itemOrderGroup;
-    private final double totalPrice;
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "fk_customer")
+    public Customer customer;
+    @Embedded
+    @NotNull
+    public ItemOrderGroup itemOrderGroup;
+    @Min(0)
+    @Column(name = "total_price")
+    public double totalPrice;
 
     public Order(Customer customer, ItemOrderGroup itemOrderGroup) {
-        this.id = UUID.randomUUID().toString();
         this.customer = customer;
         this.itemOrderGroup = itemOrderGroup;
         this.totalPrice = calculateTotalPrice();
     }
 
+    public Order() {
+
+    }
+
     private double calculateTotalPrice() {
-        double itemPrice = this.itemOrderGroup.getItem().getPrice();
+        double itemPrice = this.itemOrderGroup.getItem().price;
         int itemQuantity = this.itemOrderGroup.getAmount();
         return itemPrice * itemQuantity;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public ItemOrderGroup getItemOrder() {
-        return itemOrderGroup;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
 }

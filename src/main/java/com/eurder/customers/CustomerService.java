@@ -1,32 +1,39 @@
 package com.eurder.customers;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
+@Transactional
 public class CustomerService {
-    private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
-    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
-        this.customerRepository = customerRepository;
+    public CustomerService(CustomerMapper customerMapper) {
         this.customerMapper = customerMapper;
     }
 
-    public CustomerDto create(CreateCustomerDto createCustomerDto) {
-        Customer customer = customerMapper.toEntity(createCustomerDto);
-        customerRepository.add(customer);
-        return customerMapper.toDto(customer);
+    public CustomerDto register(Customer customerToAdd) {
+        Customer.persist(customerToAdd);
+        Customer.flush();
+        return customerMapper.toDto(customerToAdd);
     }
 
-    public Set<CustomerDto> getAll() {
-        return customerRepository.getCustomers().values().stream()
+    public List<CustomerDto> getAll() {
+        List<Customer> customers = Customer.listAll();
+        return customers.stream()
               .map(customerMapper::toDto)
-              .collect(Collectors.toSet());
+              .collect(Collectors.toList());
     }
 
-    public CustomerDto get(String id) {
-        return customerMapper.toDto(customerRepository.getCustomer(id));
+    public CustomerDto get(Long id) {
+        Customer foundCustomer = Customer.findById(id);
+        if (foundCustomer == null) {
+            throw new NotFoundException("Customer not found for id " + id);
+        }
+        return customerMapper.toDto(foundCustomer);
     }
+
 }

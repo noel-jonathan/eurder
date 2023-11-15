@@ -8,6 +8,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import static jakarta.ws.rs.core.Response.Status.CREATED;
+
 @Path("/orders")
 public class OrderController {
     private final OrderService orderService;
@@ -15,19 +17,13 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(CreateOrderDto createOrderDto) {
-        try {
-            return Response.status(Response.Status.CREATED)
-                 .entity(orderService.create(createOrderDto))
-                 .build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                .entity(e.getMessage())
+
+        return Response.status(CREATED)
+                .entity(orderService.create(createOrderDto))
                 .build();
-        }
     }
 }

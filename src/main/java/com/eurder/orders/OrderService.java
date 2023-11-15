@@ -1,34 +1,36 @@
 package com.eurder.orders;
 
 import com.eurder.customers.Customer;
-import com.eurder.customers.CustomerRepository;
 import com.eurder.items.Item;
-import com.eurder.items.ItemRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
+@Transactional
 public class OrderService {
-    private final OrderRepository orderRepository;
-    private final CustomerRepository customerRepository;
-    private final ItemRepository itemRepository;
     private final OrderMapper orderMapper;
 
-    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, ItemRepository itemRepository, OrderMapper orderMapper) {
-        this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
-        this.itemRepository = itemRepository;
+    public OrderService(OrderMapper orderMapper) {
         this.orderMapper = orderMapper;
     }
 
     public OrderDto create(CreateOrderDto createOrderDto) {
-        Customer customer = customerRepository.getCustomer(createOrderDto.customerId());
-        Item item = itemRepository.getItem(createOrderDto.orderGroup().itemId());
-        int amount = createOrderDto.orderGroup().amount();
+
+        Customer foundCustomer = Customer.findById(createOrderDto.customerId());
+        Item foundItem = Item.findById(createOrderDto.itemId());
+        int amount = createOrderDto.amount();
+
+        if (foundItem.stock < amount) {
+            throw new IllegalArgumentException(String.format("Current stock (%d) is not enough to fulfill order", amount));
+        }
+
         Order order = new Order(
-                customer,
-                new ItemOrderGroup(item, amount)
-        );
-        orderRepository.add(order);
+                foundCustomer,
+                new ItemOrderGroup(foundItem, amount));
+
+        Order.persist(order);
+        foundItem.decreaseStock(amount);
+        Item.persist(foundItem);
         return orderMapper.toDto(order);
     }
 

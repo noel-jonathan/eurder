@@ -6,10 +6,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class CustomerMapper {
     public CustomerDto toDto(Customer customer) {
         return new CustomerDto(
-                customer.getId(),
-                customer.getFirstName(),
-                customer.getLastName(),
-                customer.getEmail()
+                customer.id,
+                customer.firstName,
+                customer.lastName,
+                customer.email
         );
     }
 

@@ -1,60 +1,40 @@
 package com.eurder.customers;
 
-import org.jboss.logging.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.Objects;
-import java.util.UUID;
 
-public class Customer {
-    private final Logger logger = Logger.getLogger(Customer.class);
-    private final String id;
-    private final String firstName;
-    private final String lastName;
-    private final String email;
-    private final String address;
-    private final String phoneNumber;
+@Entity
+public class Customer extends PanacheEntity {
+
+    @Column(name = "first_name")
+    @NotEmpty
+    public String firstName;
+    @Column(name = "last_name")
+    @NotEmpty
+    public String lastName;
+    @Column(name = "address")
+    @NotEmpty
+    public String address;
+    @Column(name = "email", unique = true)
+    @NotEmpty
+    public String email;
+    @Column(name = "phone_number", unique = true)
+    @NotEmpty
+    public String phoneNumber;
 
     public Customer(String firstName, String lastName, String email, String address, String phoneNumber) {
-        this.id = String.valueOf(UUID.randomUUID().toString());
-        this.firstName = validate("First name" , firstName);
-        this.lastName = validate("Last name" , lastName);
-        this.email = validate("Email" , email);
-        this.address = validate("Address" , address);
-        this.phoneNumber = validate("Phone number" , phoneNumber);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
     }
 
-    public String validate(String fieldName, String string) {
-        if (string == null || string.isEmpty()) {
-            String errorMessage = fieldName + " not filled in";
-            logger.error(errorMessage);
-            throw new IllegalArgumentException(errorMessage);
-        }
-        return string;
-    }
+    public Customer() {
 
-    public String getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
     }
 
     @Override

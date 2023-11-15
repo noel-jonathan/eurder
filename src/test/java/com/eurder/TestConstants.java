@@ -7,7 +7,7 @@ import com.eurder.items.Item;
 import com.eurder.items.ItemDto;
 
 public class TestConstants {
-    public static final String CUSTOMER_ID = "123456789";
+    public static final Long CUSTOMER_ID = 123456789L;
     public static final CreateCustomerDto CREATE_CUSTOMER_DTO = new CreateCustomerDto(
             "John",
             "Doe",
@@ -24,12 +24,12 @@ public class TestConstants {
     );
 
     public static final CustomerDto CUSTOMER_DTO = new CustomerDto(
-            CUSTOMER.getId(),
+            CUSTOMER.id,
             "John",
             "Doe",
             "<EMAIL>"
     );
-    public static final String ITEM_ID = "987654321";
+    public static final Long ITEM_ID = 987654321L;
 
     public static final Item ITEM = new Item(
             "name",

@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @QuarkusTest
 @TestHTTPEndpoint(ItemController.class)
 class ItemControllerTest {
-    @Inject
-    ItemRepository itemRepository;
 
     @Test
     void createItem_givenIncompleteRequest_thenShouldReturn400() {
@@ -32,7 +30,7 @@ class ItemControllerTest {
                 .body(incompleteCreateItemDto)
                 .when().post()
                 .then().statusCode(400);
-        assertEquals(0, itemRepository.getItems().size());
+        assertEquals(0, Item.listAll().size());
     }
 
     @Test
@@ -43,7 +41,7 @@ class ItemControllerTest {
                .body(ITEM_DTO)
                .when().post()
                .then().statusCode(201);
-        assertEquals(1, itemRepository.getItems().size());
+        assertEquals(1, Item.listAll().size());
     }
 
     @Test
@@ -55,6 +53,6 @@ class ItemControllerTest {
 
     @AfterEach
     void tearDown() {
-        itemRepository.getItems().clear();
+        Item.listAll().clear();
     }
 }

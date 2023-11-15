@@ -3,6 +3,7 @@ package com.eurder.customers;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestHTTPEndpoint(CustomerController.class)
 class CustomerControllerTest {
-    @Inject
-    CustomerRepository customerRepository;
 
     @Test
     void createCustomer_givenIncompleteRequest_thenShouldReturn400() {
@@ -34,7 +33,7 @@ class CustomerControllerTest {
                 .body(incompleteCreateCustomerDto)
                 .when().post()
                 .then().statusCode(400);
-        assertEquals(0, customerRepository.getCustomers().size());
+        assertEquals(0, Customer.listAll().size());
     }
 
     @Test
@@ -45,7 +44,7 @@ class CustomerControllerTest {
                 .body(CREATE_CUSTOMER_DTO)
                 .when().post()
                 .then().statusCode(201);
-        assertEquals(1, customerRepository.getCustomers().size());
+        assertEquals(1, Customer.listAll().size());
     }
 
     @Test
@@ -57,7 +56,7 @@ class CustomerControllerTest {
 
     @Test
     void whenGetCustomer_givenWrongId_thenShouldReturn404() {
-        String id = UUID.randomUUID().toString();
+        Long id = 1234567879L;
 
         given()
                 .pathParam("id", id)
@@ -68,7 +67,7 @@ class CustomerControllerTest {
     @Test
     void whenGetCustomer_givenCustomer_thenShouldReturn200() {
 
-        String id = given()
+        Integer id = given()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(CREATE_CUSTOMER_DTO)
                 .when().post()
@@ -83,7 +82,8 @@ class CustomerControllerTest {
     }
 
     @AfterEach
+    @Transactional
     void tearDown() {
-        customerRepository.getCustomers().clear();
+        Customer.deleteAll();
     }
 }
