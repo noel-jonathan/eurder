@@ -1,5 +1,6 @@
 package com.eurder.authentification;
 
+import com.eurder.customers.CreateCustomerDto;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
@@ -19,9 +20,9 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
-    public UserDto registerCustomer(User user) {
+    public void registerCustomer(CreateCustomerDto createCustomerDto) {
+        User user = userMapper.toEntity(createCustomerDto);
         user.role = "customer";
         User.add(user.email, user.password, user.role);
-        return userMapper.toDto(user);
     }
 }

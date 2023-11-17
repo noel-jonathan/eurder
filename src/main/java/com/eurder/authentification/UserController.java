@@ -7,7 +7,7 @@ import jakarta.ws.rs.core.Response;
 
 import static jakarta.ws.rs.core.Response.Status.CREATED;
 
-@Path("/users")
+@Path("/admins")
 public class UserController {
 
     private final UserService userService;
@@ -17,12 +17,6 @@ public class UserController {
     }
 
     @POST
-    public Response registerCustomer(@Valid User user) {
-        return Response.status(CREATED).entity(userService.registerCustomer(user)).build();
-    }
-
-    @POST
-    @Path("/admins")
     public Response registerAdmin(@Valid User user) {
         return Response.status(CREATED).entity(userService.registerAdmin(user)).build();
     }

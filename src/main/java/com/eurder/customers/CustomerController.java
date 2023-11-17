@@ -18,10 +18,10 @@ public class CustomerController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(@Valid Customer customer) {
+    public Response register(CreateCustomerDto createCustomerDto) {
 
         return Response.status(Response.Status.CREATED)
-                .entity(customerService.register(customer))
+                .entity(customerService.register(createCustomerDto))
                 .build();
 
     }

@@ -1,5 +1,6 @@
 package com.eurder.customers;
 
+import com.eurder.authentification.User;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -15,9 +16,9 @@ public class CustomerMapper {
 
     public Customer toEntity(CreateCustomerDto createCustomerDto) {
         return new Customer(
+                createCustomerDto.email(),
                 createCustomerDto.firstName(),
                 createCustomerDto.lastName(),
-                createCustomerDto.email(),
                 createCustomerDto.address(),
                 createCustomerDto.phoneNumber()
         );

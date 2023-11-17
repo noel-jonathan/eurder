@@ -2,6 +2,7 @@ package com.eurder.orders;
 
 import com.eurder.customers.Customer;
 import com.eurder.items.Item;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
@@ -14,9 +15,11 @@ public class OrderService {
         this.orderMapper = orderMapper;
     }
 
-    public OrderDto create(CreateOrderDto createOrderDto) {
+    public OrderDto create(SecurityIdentity securityIdentity, CreateOrderDto createOrderDto) {
 
-        Customer foundCustomer = Customer.findById(createOrderDto.customerId());
+        String customerEmail = securityIdentity.getPrincipal().getName();
+        Customer foundCustomer = Customer.find(customerEmail).firstResult();
+
         Item foundItem = Item.findById(createOrderDto.itemId());
         int amount = createOrderDto.amount();
 

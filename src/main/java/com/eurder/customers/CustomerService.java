@@ -1,5 +1,7 @@
 package com.eurder.customers;
 
+import com.eurder.authentification.User;
+import com.eurder.authentification.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
@@ -11,11 +13,16 @@ import java.util.stream.Collectors;
 @Transactional
 public class CustomerService {
     private final CustomerMapper customerMapper;
-    public CustomerService(CustomerMapper customerMapper) {
+    private final UserService userService;
+    public CustomerService(CustomerMapper customerMapper, UserService userService) {
         this.customerMapper = customerMapper;
+        this.userService = userService;
     }
 
-    public CustomerDto register(Customer customerToAdd) {
+    public CustomerDto register(CreateCustomerDto createCustomerDto) {
+        userService.registerCustomer(createCustomerDto);
+
+        Customer customerToAdd = customerMapper.toEntity(createCustomerDto);
         Customer.persist(customerToAdd);
         Customer.flush();
         return customerMapper.toDto(customerToAdd);

@@ -10,6 +10,7 @@ public class TestConstants {
     public static final Long CUSTOMER_ID = 123456789L;
     public static final CreateCustomerDto CREATE_CUSTOMER_DTO = new CreateCustomerDto(
             "John",
+            "password",
             "Doe",
             "<EMAIL>",
             "Address",
