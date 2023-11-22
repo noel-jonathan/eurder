@@ -9,10 +9,10 @@ import com.eurder.items.ItemDto;
 public class TestConstants {
     public static final Long CUSTOMER_ID = 123456789L;
     public static final CreateCustomerDto CREATE_CUSTOMER_DTO = new CreateCustomerDto(
-            "John",
+            "john@doe.com",
             "password",
+            "John",
             "Doe",
-            "<EMAIL>",
             "Address",
             "123456789"
     );

@@ -24,7 +24,7 @@ public class CustomerService {
 
         Customer customerToAdd = customerMapper.toEntity(createCustomerDto);
         Customer.persist(customerToAdd);
-        Customer.flush();
+//        Customer.flush();
         return customerMapper.toDto(customerToAdd);
     }
 

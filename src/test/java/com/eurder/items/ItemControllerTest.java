@@ -2,6 +2,7 @@ package com.eurder.items;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.AfterEach;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @TestHTTPEndpoint(ItemController.class)
+@TestSecurity(authorizationEnabled = false)
 class ItemControllerTest {
 
     @Test

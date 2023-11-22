@@ -2,6 +2,7 @@ package com.eurder.customers;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.MediaType;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
 @TestHTTPEndpoint(CustomerController.class)
+@TestSecurity(authorizationEnabled = false)
 class CustomerControllerTest {
 
     @Test
@@ -49,7 +51,8 @@ class CustomerControllerTest {
     }
 
     @Test
-    void getAll() {
+    @TestSecurity(user = "test", roles = {"admin"} )
+    void getAll_whenAuthAsAdmin() {
         given()
                 .when().get()
                 .then().statusCode(200);
