@@ -1,7 +1,6 @@
 package com.eurder.customers;
 
-import com.eurder.authentification.User;
-import com.eurder.authentification.UserService;
+import com.eurder.users.UserService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;

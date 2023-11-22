@@ -1,4 +1,4 @@
-package com.eurder.authentification;
+package com.eurder.users;
 
 import jakarta.validation.Valid;
 import jakarta.ws.rs.POST;

@@ -1,6 +1,5 @@
 package com.eurder.customers;
 
-import com.eurder.authentification.User;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
