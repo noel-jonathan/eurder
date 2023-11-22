@@ -1,4 +1,4 @@
-package com.eurder.authentification;
+package com.eurder.users;
 
 import com.eurder.customers.CreateCustomerDto;
 import jakarta.enterprise.context.ApplicationScoped;

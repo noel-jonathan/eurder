@@ -1,4 +1,4 @@
-package com.eurder.authentification;
+package com.eurder.users;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
